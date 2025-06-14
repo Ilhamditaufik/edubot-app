@@ -1,0 +1,36 @@
+import random
+
+def get_random_question():
+    questions = [
+        {"question": "Apa ibu kota dari Indonesia?", "answer": "Jakarta"},
+        {"question": "Berapa hasil dari 12 x 12?", "answer": "144"},
+        {"question": "Siapa presiden pertama Indonesia?", "answer": "Soekarno"},
+        {"question": "Planet terbesar di tata surya?", "answer": "Jupiter"},
+        {"question": "Hewan tercepat di darat?", "answer": "Cheetah"},
+        {"question": "Apa nama gunung tertinggi di dunia?", "answer": "Everest"},
+        {"question": "Apa lambang unsur kimia dari air?", "answer": "H2O"},
+        {"question": "Siapa penemu lampu pijar?", "answer": "Thomas Edison"},
+        {"question": "Pulau terbesar di Indonesia?", "answer": "Kalimantan"},
+        {"question": "Bahasa resmi negara Jepang?", "answer": "Jepang"},
+        {"question": "Siapa tokoh kemerdekaan India?", "answer": "Mahatma Gandhi"},
+        {"question": "Benua terkecil di dunia?", "answer": "Australia"},
+        {"question": "Jumlah warna di pelangi?", "answer": "7"},
+        {"question": "Apa alat untuk mengukur suhu?", "answer": "Termometer"},
+        {"question": "Siapa yang menulis 'Laskar Pelangi'?", "answer": "Andrea Hirata"},
+        {"question": "Nama organ yang memompa darah?", "answer": "Jantung"},
+        {"question": "Satuan dasar arus listrik?", "answer": "Ampere"},
+        {"question": "Huruf pertama dalam abjad Yunani?", "answer": "Alpha"},
+        {"question": "Tahun proklamasi Indonesia?", "answer": "1945"},
+        {"question": "Binatang apa yang disebut 'Raja Hutan'?", "answer": "Singa"},
+        {"question": "Apa ibu kota Thailand?", "answer": "Bangkok"},
+        {"question": "Berapa sisi segi enam?", "answer": "6"},
+        {"question": "Negara penghasil mobil Toyota?", "answer": "Jepang"},
+        {"question": "Benda langit yang mengelilingi bumi?", "answer": "Bulan"},
+        {"question": "Apa warna daun yang sehat?", "answer": "Hijau"},
+        {"question": "Siapa yang menciptakan teori relativitas?", "answer": "Albert Einstein"},
+        {"question": "Alat musik tradisional dari Jawa Barat?", "answer": "Angklung"},
+        {"question": "Zat apa yang memberi warna hijau pada daun?", "answer": "Klorofil"},
+        {"question": "Ibukota provinsi Sumatera Barat?", "answer": "Padang"},
+        {"question": "Apa nama samudra terbesar di dunia?", "answer": "Samudra Pasifik"},
+    ]
+    return random.choice(questions)

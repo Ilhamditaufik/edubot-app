@@ -74,7 +74,7 @@ st.session_state.theme_mode = "light" if selected_theme == "Terang" else "dark"
 
 # Sidebar Profil
 st.sidebar.markdown("---")
-st.sidebar.image("assets/logo2.WEBP", width=150)
+st.sidebar.image("assets/logo2.webp", width=150)
 st.sidebar.image("assets/profile.jpg", width=120)
 st.sidebar.write(f"👤 **Profil Pengguna**")
 st.sidebar.write(f"✅ Login sebagai: `{st.session_state.username}`")

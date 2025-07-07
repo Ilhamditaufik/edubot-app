@@ -1,7 +1,5 @@
 streamlit
 openai
 speechrecognition
-pyttsx3
-reportlab
-python-dotenv
-streamlit_webrtc
+gtts
+fpdf

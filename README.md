@@ -1,5 +1,13 @@
+
+> *"Alhamdulillah berhasil...
+Karena sesungguhnya proses itu berasal dari kemauan yang tinggi. 
+Kalau aku tidak gigih, mungkin proyek interaktif ini tidak akan pernah ada."*  
+ — Ilhamdi Taufik.
+
+---
+
 🎓 Edubot - Aplikasi Edukasi Interaktif
-Edubot adalah proyek aplikasi edukasi interaktif berbasis Python & Streamlit yang saya kembangkan untuk membantu pengguna belajar secara menyenangkan. Aplikasi ini dilengkapi chatbot edukatif, kuis interaktif, video pembelajaran, dan sertifikat otomatis.
+Edubot adalah proyek aplikasi edukasi interaktif berbasis Python & Streamlit yang saya kembangkan untuk membantu pengguna belajar secara menyenangkan. Aplikasi ini dilengkapi chatbot edukatif, kuis interaktif, video pembelajaran, dan sertifikat otomatis. aplikasi edukatif berbasis Python dan Streamlit yang saya kembangkan sebagai media pembelajaran interaktif. Proyek ini merupakan hasil semangat belajar, eksplorasi, dan keinginan kuat untuk berbagi pengetahuan lewat teknologi.
 
 ✨ Fitur Utama
 🎤 Chatbot Edukatif

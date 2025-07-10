@@ -16,6 +16,19 @@ openai.api_base = "https://api.together.xyz/v1"
 EMAIL_SENDER = "ilham030918@gmail.com"
 EMAIL_PASSWORD = "ilhamdi26"
 
+# ✅ Inisialisasi awal session state agar tidak error
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = True  # Bypass login
+if "username" not in st.session_state:
+    st.session_state.username = "Guest"
+if "theme_mode" not in st.session_state:
+    st.session_state.theme_mode = "light"
+if "messages" not in st.session_state:
+    st.session_state.messages = [
+        {"role": "system", "content": "Kamu adalah asisten edukatif ramah yang menjawab pertanyaan secara sederhana dan mendidik."}
+    ]
+
+
 
 # ============================
 # 💾 Dummy User Data
@@ -41,48 +54,6 @@ def load_history():
 def save_history(messages):
     with open(HISTORY_FILE, "w", encoding="utf-8") as f:
         json.dump(messages, f, ensure_ascii=False, indent=2)
-
-# ============================
-# 🟢 Login Section
-# ============================
-if "logged_in" not in st.session_state:
-    st.session_state.logged_in = False
-
-if not st.session_state.logged_in:
-    st.set_page_config(page_title="Login Edubot", layout="centered")
-    st.title("🔐 Login Edubot")
-    username = st.text_input("👤 Username")
-    password = st.text_input("🔑 Password", type="password")
-    if st.button("➡️ Login"):
-        if username in users and users[username] == password:
-            st.session_state.logged_in = True
-            st.session_state.username = username
-            st.success(f"Selamat datang, {username}! 🎉")
-        else:
-            st.error("Username atau password salah.")
-    st.stop()
-
-# ============================
-# 🟢 Setelah Login
-# ============================
-st.set_page_config(page_title="🤖 Edubot - Edukasi Interaktif", layout="centered")
-
-# Sidebar: Tema
-st.sidebar.markdown("### 🎨 Pilih Tema")
-selected_theme = st.sidebar.radio("Mode Tampilan", ["Terang", "Gelap"])
-st.session_state.theme_mode = "light" if selected_theme == "Terang" else "dark"
-
-# Sidebar Profil
-st.sidebar.markdown("---")
-st.sidebar.image("assets/logo2.webp", width=150)
-st.sidebar.image("assets/profile.jpg", width=120)
-st.sidebar.write(f"👤 **Profil Pengguna**")
-st.sidebar.write(f"✅ Login sebagai: `{st.session_state.username}`")
-st.sidebar.markdown("---")
-
-if st.sidebar.button("🔓 Logout"):
-    st.session_state.logged_in = False
-    st.session_state.username = ""
 
 # Sidebar Riwayat Chat
 with st.sidebar:
@@ -179,9 +150,8 @@ st.markdown(
     f"""
     <style>
     .stApp {{
-        background-color: {theme_color};
-        color: {text_color};
-        transition: background-color 0.5s ease, color 0.5s ease;
+        background: #263238;  /* abu kebiruan gelap */
+        background-attachment: fixed;
     }}
     h1, h2, h3, h4, h5, h6 {{
         color: {text_color};
@@ -295,29 +265,14 @@ with tab1:
             {"role": "system", "content": "Kamu adalah asisten edukatif ramah yang menjawab pertanyaan secara sederhana dan mendidik."}
         ]
 
-    st.markdown("### 🎙️ Gunakan Suara untuk Bertanya")
-    uploaded_audio = st.file_uploader("🎤 Rekam suara lalu upload (MP3/WAV)", type=["wav", "mp3"])
-    if uploaded_audio:
-        st.audio(uploaded_audio, format="audio/wav")
-        recognizer = sr.Recognizer()
-        with st.spinner("⏳ Mentranskrip suara..."):
-            try:
-                with open("temp_audio.wav", "wb") as f:
-                    f.write(uploaded_audio.read())
-                with sr.AudioFile("temp_audio.wav") as source:
-                    audio_data = recognizer.record(source)
-                    text = recognizer.recognize_google(audio_data, language="id-ID")
-                    st.session_state.voice_input = text
-                    st.success(f"🗣️ Terdeteksi: {text}")
-            except Exception as e:
-                st.error(f"Gagal mengenali suara: {e}")
-    else:
-        st.session_state.voice_input = ""
+    
 
     user_question = st.text_input(
-        "Tanyakan sesuatu kepada Edubot:",
-        value=st.session_state.voice_input if "voice_input" in st.session_state else ""
+    "Tanyakan sesuatu kepada Edubot:",
+    value=""
     )
+
+
 
     import requests
 
@@ -357,13 +312,6 @@ if st.button("📩 Kirim Pertanyaan"):
                 )
                 st.success("✅ Edubot menjawab:")
                 st.markdown(reply)
-
-                if st.button("🔈 Bacakan Jawaban"):
-                    tts = gTTS(reply, lang="id")
-                    tts.save("jawaban.mp3")
-                    audio_file = open("jawaban.mp3", "rb")
-                    audio_bytes = audio_file.read()
-                    st.audio(audio_bytes, format="audio/mp3")
             else:
                 st.error(f"Terjadi kesalahan API: {response.text}")
     else:

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot AI Together</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <h2>🤖 Chatbot AI Together</h2>
+        <div id="chat-box">
+            {% for item in history %}
+                {% if item.role == "user" %}
+                    <div class="user-msg"><strong>Kamu:</strong> {{ item.message }}</div>
+                {% else %}
+                    <div class="bot-msg"><strong>AI:</strong> {{ item.message }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <form id="chat-form">
+            <input type="text" id="user-input" name="message" placeholder="Ketik pesan..." required>
+            <button type="submit">Kirim</button>
+        </form>
+        <button id="clear-chat" style="margin-top:10px;">Hapus Histori Chat</button>
+    </div>
+
+
+    <script>
+    const form = document.getElementById("chat-form");
+const input = document.getElementById("user-input");
+const chatBox = document.getElementById("chat-box");
+const clearButton = document.getElementById("clear-chat");
+
+// Function untuk ambil waktu real time
+function getCurrentTime() {
+    const now = new Date();
+    return now.getHours().toString().padStart(2, '0') + ":" +
+           now.getMinutes().toString().padStart(2, '0');
+}
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const message = input.value;
+    if (!message) return;
+
+    // Tampilkan pesan user dengan timestamp
+    chatBox.innerHTML += `
+    <div class="user-msg">
+        <strong>Kamu:</strong> ${message}
+        <div class="timestamp">${getCurrentTime()}</div>
+    </div>`;
+
+    // Tampilkan typing animation
+    chatBox.innerHTML += `
+    <div class="bot-msg typing">
+        <em>Mengetik<span class="dot"></span><span class="dot"></span><span class="dot"></span></em>
+    </div>`;
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+    input.value = "";
+
+    fetch("https://chatbot-xxxx.up.railway.app/chat", {
+    method: "POST",
+    body: new URLSearchParams({message: message})
+    })
+
+    .then(response => response.json())
+    .then(data => {
+        // Hapus typing animation
+        const typingMsg = document.querySelector(".bot-msg.typing");
+        if (typingMsg) typingMsg.remove();
+
+        // Tampilkan balasan AI dengan timestamp
+        chatBox.innerHTML += `
+        <div class="bot-msg">
+            <strong>AI:</strong> ${data.reply}
+            <div class="timestamp">${getCurrentTime()}</div>
+        </div>`;
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+    })
+    .catch(err => {
+        const typingMsg = document.querySelector(".bot-msg.typing");
+        if (typingMsg) typingMsg.remove();
+
+        chatBox.innerHTML += `<div class="bot-msg">Error: ${err}</div>`;
+    });
+});
+
+clearButton.addEventListener("click", function() {
+    fetch("https://chatbot-xxxx.up.railway.app/clear", {
+    method: "POST"
+    })
+
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "cleared") {
+            chatBox.innerHTML = "";
+        }
+    })
+    .catch(err => {
+        console.error("Gagal menghapus histori:", err);
+    });
+});
+
+    </script>
+</body>
+</html>

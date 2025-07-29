@@ -10,7 +10,7 @@ from email.message import EmailMessage
 
 
 # 🟢 API KEY
-openai.api_key = "tgp_v1_pRd7ya0V8UWwKlgyWmSU5Cm3JktDlEqNc2_JtZSArOU"
+openai.api_key = "tgp_v1_fnyg8jrfFhaxRz4iTbE7TqXJFOZljiwNWTI-Ej-Ucz0"
 openai.api_base = "https://api.together.xyz/v1"
 
 EMAIL_SENDER = "ilham030918@gmail.com"
